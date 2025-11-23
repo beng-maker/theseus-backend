@@ -1,26 +1,24 @@
-# app.py —— 永久雲端版（Render 100% 成功）
+# app.py —— 永久雲端 + 100% 成功版
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from ultralytics import YOLO
 import torch
+from PIL import Image
+import io
+import base64
 
 app = Flask(__name__)
 CORS(app)
 
-# 安全載入 YOLOv8
 print("載入 YOLOv8 模型中...")
-model = YOLO('yolov8s.pt', trust_repo=True)  # 關鍵一行！
+torch.serialization.add_safe_globals(['ultralytics.nn.tasks.DetectionModel'])
+model = YOLO('yolov8s.pt')  # 自動下載 + 安全載入！
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
-        if not data or 'image' not in data:
-            return jsonify({"error": "No image"}), 400
-
         img_b64 = data['image'].split(',')[1] if ',' in data['image'] else data['image']
-        from PIL import Image
-        import io, base64
         img_bytes = base64.b64decode(img_b64)
         img = Image.open(io.BytesIO(img_bytes))
 
