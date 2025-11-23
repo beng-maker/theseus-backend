@@ -1,7 +1,8 @@
-# backend/requirements.txt
+# requirements.txt —— 支援 Python 3.13
 Flask==2.3.3
 flask-cors==4.0.0
-torch==2.0.1
-torchvision==0.15.2
+torch==2.5.0
+torchvision==0.20.0
 Pillow==10.0.0
-numpy==1.24.3
+numpy==2.1.1
+ultralytics==8.2.0
