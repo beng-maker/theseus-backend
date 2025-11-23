@@ -1,7 +1,7 @@
 Flask==2.3.3
 flask-cors==4.0.0
-torch==2.5.0
+torch==2.6.0
 torchvision==0.21.0
-Pillow==10.4.0  # 升級！支援 Python 3.13
+Pillow==10.4.0
 numpy==2.1.1
 ultralytics==8.2.0
