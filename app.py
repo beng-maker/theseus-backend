@@ -7,17 +7,22 @@ import torch
 app = Flask(__name__)
 CORS(app)
 
-# 宇宙級白名單終極全家桶（你完全正確！一次過解決所有問題！）
+import torch
+import ultralytics
+print("torch version:", torch.__version__)
+print("ultralytics version:", ultralytics.__version__)
+
 from torch.nn.modules.container import Sequential, ModuleList
 from torch.nn.modules.conv import Conv2d
 from torch.nn.modules.batchnorm import BatchNorm2d
 from torch.nn.modules.activation import SiLU, Hardswish
 from torch.nn.modules.pooling import MaxPool2d
+from torch.nn.modules.upsampling import Upsample
 from ultralytics.nn.tasks import DetectionModel
 from ultralytics.nn.modules.conv import Conv
 from ultralytics.nn.modules.block import C2f, Bottleneck, SPPF, Proto
 from ultralytics.nn.modules.head import Detect
-from torch.nn.modules.upsampling import Upsample
+from ultralytics.nn.modules.conv import Concat  # 如果之前遇到過也加入
 
 torch.serialization.add_safe_globals([
     DetectionModel,
@@ -29,13 +34,17 @@ torch.serialization.add_safe_globals([
     SiLU,
     Hardswish,
     MaxPool2d,
-    Upsample,   # 新增此行
+    Upsample,
+    Concat,
     C2f,
     Bottleneck,
     SPPF,
     Proto,
     Detect
 ])
+
+print("已設置安全白名單")
+
 
 
 print("載入 YOLOv8 模型中...")
@@ -82,4 +91,5 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
 
