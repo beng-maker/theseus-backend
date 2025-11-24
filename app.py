@@ -22,7 +22,9 @@ from ultralytics.nn.tasks import DetectionModel
 from ultralytics.nn.modules.conv import Conv
 from ultralytics.nn.modules.block import C2f, Bottleneck, SPPF, Proto
 from ultralytics.nn.modules.head import Detect
-from ultralytics.nn.modules.conv import Concat  # 如果之前遇到過也加入
+from ultralytics.nn.modules.conv import Concat  
+from ultralytics.nn.modules.block import DFL
+
 
 torch.serialization.add_safe_globals([
     DetectionModel,
@@ -92,6 +94,7 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
