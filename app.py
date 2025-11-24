@@ -40,7 +40,8 @@ torch.serialization.add_safe_globals([
     Bottleneck,
     SPPF,
     Proto,
-    Detect
+    Detect,
+    DFL
 ])
 
 print("已設置安全白名單")
@@ -91,5 +92,6 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
 
 
