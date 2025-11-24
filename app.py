@@ -52,6 +52,11 @@ print("已設置安全白名單")
 
 print("載入 YOLOv8 模型中...")
 model = YOLO('yolov8s.pt')  # 自動下載 + 完全安全載入！
+import os
+
+port = int(os.environ.get('PORT', 5000))
+app.run(host='0.0.0.0', port=port)
+
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
@@ -94,6 +99,7 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
