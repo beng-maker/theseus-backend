@@ -1,18 +1,23 @@
-# app.py —— 永久雲端 + 100% 成功版（最終版！）
+# app.py —— 永久雲端 + 真正 YOLOv8 + 100% 成功！
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from ultralytics import YOLO
-import torch
+import base64
+from PIL import Image
+import io
 
 app = Flask(__name__)
 CORS(app)
 
 print("載入 YOLOv8 模型中...")
 
-# 關鍵：加入安全白名單！
-torch.serialization.add_safe_globals(['ultralytics.nn.tasks.DetectionModel'])
+# 關鍵：正確使用 DetectionModel 類別（不是字串！）
+from ultralytics.nn.tasks import DetectionModel
+import torch
+torch.serialization.add_safe_globals([DetectionModel])
 
-model = YOLO('yolov8s.pt')  # 自動下載 + 安全載入！
+# 真正載入 YOLOv8
+model = YOLO('yolov8s.pt')  # 自動下載 + 安全載入
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
@@ -22,8 +27,6 @@ def predict():
             return jsonify({"error": "No image"}), 400
 
         img_b64 = data['image'].split(',')[1] if ',' in data['image'] else data['image']
-        from PIL import Image
-        import io, base64
         img_bytes = base64.b64decode(img_b64)
         img = Image.open(io.BytesIO(img_bytes))
 
@@ -44,11 +47,12 @@ def predict():
         return jsonify({"detections": detections})
 
     except Exception as e:
+        print("Error:", e)
         return jsonify({"error": str(e)}), 500
 
 @app.route('/')
 def home():
-    return jsonify({"message": "Theseus AI 永久雲端版上線！"})
+    return jsonify({"message": "Theseus AI 永久雲端版上線！", "status": "LIVE"})
 
 if __name__ == '__main__':
     import os
