@@ -17,6 +17,7 @@ from ultralytics.nn.tasks import DetectionModel
 from ultralytics.nn.modules.conv import Conv
 from ultralytics.nn.modules.block import C2f, Bottleneck, SPPF, Proto
 from ultralytics.nn.modules.head import Detect
+from torch.nn.modules.upsampling import Upsample
 
 torch.serialization.add_safe_globals([
     DetectionModel,
@@ -28,12 +29,14 @@ torch.serialization.add_safe_globals([
     SiLU,
     Hardswish,
     MaxPool2d,
+    Upsample,   # 新增此行
     C2f,
     Bottleneck,
     SPPF,
     Proto,
     Detect
 ])
+
 
 print("載入 YOLOv8 模型中...")
 model = YOLO('yolov8s.pt')  # 自動下載 + 完全安全載入！
@@ -79,3 +82,4 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
