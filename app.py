@@ -1,10 +1,10 @@
-# 宇宙級白名單終極全家桶（你完全正確！已包含所有常見類別）
 import torch
 from torch.nn.modules.container import Sequential, ModuleList
 from torch.nn.modules.conv import Conv2d
 from torch.nn.modules.batchnorm import BatchNorm2d
 from torch.nn.modules.activation import SiLU, Hardswish
 from torch.nn.modules.pooling import MaxPool2d
+from torch.nn.modules.upsampling import Upsample
 from ultralytics.nn.tasks import DetectionModel
 from ultralytics.nn.modules.conv import Conv
 from ultralytics.nn.modules.block import C2f, Bottleneck, SPPF, Proto
@@ -20,6 +20,7 @@ torch.serialization.add_safe_globals([
     SiLU,
     Hardswish,
     MaxPool2d,
+    Upsample,
     C2f,
     Bottleneck,
     SPPF,
@@ -83,4 +84,5 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
 
